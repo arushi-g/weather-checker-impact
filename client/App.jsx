@@ -1,5 +1,4 @@
 import React from 'react';
-import ZipForm from './ZipForm.jsx';
 
 const App = function() {
   return (
