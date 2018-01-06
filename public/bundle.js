@@ -964,8 +964,10 @@ _reactDom2.default.render(_react2.default.createElement(_App2.default, null), do
 
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+    value: true
 });
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _react = __webpack_require__(2);
 
@@ -977,17 +979,113 @@ var _ZipForm2 = _interopRequireDefault(_ZipForm);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var App = function App() {
-  return _react2.default.createElement(
-    'div',
-    { className: 'container' },
-    _react2.default.createElement(
-      'h1',
-      null,
-      'What\'s the weather?'
-    )
-  );
-};
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+//const App = function() {
+//  return (
+//    <div className="container">
+//      <h1>What's the weather?</h1>
+//      <ZipForm />
+//    </div>
+//    
+//  )
+//}
+
+var App = function (_React$Component) {
+    _inherits(App, _React$Component);
+
+    // weirdest zip code ever: 34987654326iy
+    //http://api.wunderground.com/api/216f78f6f0d5cbd9/conditions/q/10004.json
+
+    function App() {
+        _classCallCheck(this, App);
+
+        var _this = _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this));
+
+        var key = void 0;
+        _this.state = {
+            zipcode: null,
+            weatherData: null
+        };
+        _this.updateZipcode = _this.updateZipcode.bind(_this);
+        return _this;
+    }
+
+    _createClass(App, [{
+        key: 'updateZipcode',
+        value: function updateZipcode(zip) {
+            //this.state.zipcode = zip;
+            this.setState({ zipcode: zip });
+
+            console.log(zip);
+            this.getWeatherData(zip);
+        }
+    }, {
+        key: 'getWeatherData',
+        value: async function getWeatherData(zip) {
+            try {
+                var proxyurl = "https://cors-anywhere.herokuapp.com/";
+                var response = await fetch(proxyurl + "http://api.wunderground.com/api/216f78f6f0d5cbd9/conditions/q/" + zip + ".json");
+                //let weatherInfo = await response.json()
+                this.setState({ weatherData: await response.json() });
+                console.log(this.state.weatherData);
+                console.log('The temperature is ' + this.state.weatherData.current_observation.temperature_string);
+            } catch (error) {
+                console.log(error);
+            }
+        }
+        //<h3>The temperature is {this.state.weatherData.current_observation.temperature_string}</h3>
+
+    }, {
+        key: 'render',
+        value: function render() {
+            return _react2.default.createElement(
+                'div',
+                { className: 'container' },
+                _react2.default.createElement(
+                    'h1',
+                    null,
+                    'What\'s the weather?'
+                ),
+                _react2.default.createElement(_ZipForm2.default, { function1: this.updateZipcode }),
+                this.state.weatherData == null || this.state.weatherData.current_observation == undefined ? _react2.default.createElement(
+                    'h2',
+                    null,
+                    'Please enter a valid zipcode'
+                ) : _react2.default.createElement(
+                    'div',
+                    null,
+                    _react2.default.createElement(
+                        'h2',
+                        null,
+                        'You\'re in ',
+                        this.state.weatherData.current_observation.display_location.full,
+                        ' ',
+                        this.state.zipcode
+                    ),
+                    _react2.default.createElement(
+                        'h3',
+                        null,
+                        'The temperature is ',
+                        this.state.weatherData.current_observation.temperature_string
+                    ),
+                    _react2.default.createElement(
+                        'h3',
+                        null,
+                        'It feels like ',
+                        this.state.weatherData.current_observation.feelslike_string
+                    )
+                )
+            );
+        }
+    }]);
+
+    return App;
+}(_react2.default.Component);
 
 exports.default = App;
 
@@ -18301,10 +18399,106 @@ module.exports = camelize;
 
 /***/ }),
 /* 28 */
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-throw new Error("Module build failed: Error: ENOENT: no such file or directory, open '/Users/karen/Fullstack/impact/weatherCheckerStart/client/ZipForm.jsx'");
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(2);
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+//
+//function ZipForm(props) {
+//    
+//    function clickMethod(zip) {
+//        event.preventDefault()
+//        props.function(zip)
+//    }
+//    
+//    return (
+//        <div>
+//            <input placeholder='Enter your Zip Code' />
+//            <button onClick="clickMethod(target.value)">Go</button>
+//        </div>    
+//    )
+//}
+
+
+//function ZipForm(props) {
+//    
+//    function clickMethod() {
+//        event.preventDefault()
+//        console.log('click ran')
+//        props.function(target.value)
+//    }
+//    
+//    return (
+//        <div>
+//            <input placeholder='Enter your Zip Code' />
+//            <button onClick={this.clickMethod}>Go</button>
+//        </div>    
+//    )
+//}
+//
+//export default ZipForm;
+
+var ZipForm = function (_React$Component) {
+    _inherits(ZipForm, _React$Component);
+
+    function ZipForm() {
+        _classCallCheck(this, ZipForm);
+
+        var _this = _possibleConstructorReturn(this, (ZipForm.__proto__ || Object.getPrototypeOf(ZipForm)).call(this));
+
+        _this.state = {};
+        _this.clickMethod = _this.clickMethod.bind(_this);
+        return _this;
+    }
+
+    _createClass(ZipForm, [{
+        key: 'clickMethod',
+        value: function clickMethod() {
+            event.preventDefault();
+            var input = document.getElementById('input');
+            console.log('click ran');
+            this.props.function1(input.value);
+            //this.props.function1();
+        }
+    }, {
+        key: 'render',
+        value: function render() {
+            return _react2.default.createElement(
+                'div',
+                null,
+                _react2.default.createElement('input', { id: 'input', placeholder: 'Enter your Zip Code' }),
+                _react2.default.createElement(
+                    'button',
+                    { onClick: this.clickMethod },
+                    'Go'
+                )
+            );
+        }
+    }]);
+
+    return ZipForm;
+}(_react2.default.Component);
+
+exports.default = ZipForm;
 
 /***/ })
 /******/ ]);
